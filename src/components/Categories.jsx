@@ -1,20 +1,10 @@
 import React from 'react'
-
-const categories = [
-  'Все',
-  'Мясные',
-  'Вегетарианская',
-  'Гриль',
-  'Острые',
-  'Закрытые',
-]
+import { useDispatch, useSelector } from 'react-redux'
+import { setActive } from '../redux/slices/categoriesSlice'
 
 function Categories() {
-  const [active, setActive] = React.useState(0)
-
-  const onClickCategory = (index) => {
-    setActive(index)
-  }
+  const { categories, active } = useSelector((state) => state.categories)
+  const dispatch = useDispatch()
 
   return (
     <div className="categories">
@@ -22,7 +12,7 @@ function Categories() {
         {categories.map((value, index) => (
           <li
             key={index}
-            onClick={() => onClickCategory(index)}
+            onClick={() => dispatch(setActive(index))}
             className={index === active ? 'active' : ''}
           >
             {value}

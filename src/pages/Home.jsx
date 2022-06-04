@@ -1,23 +1,19 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Categories from '../components/Categories'
 import PizzaBlock from '../components/PizzaBlock'
 import Sort from '../components/Sort'
 import Loader from '../components/PizzaBlock/Loader'
+import { fetchItems } from '../redux/slices/pizzasSlice'
 
 function Home() {
-  const [items, setItems] = React.useState([])
-  const [isLoading, setLoading] = React.useState(true)
+  const { items, isLoading } = useSelector((state) => state.pizzas)
+  const dispatch = useDispatch()
 
   React.useEffect(() => {
-    fetch('https://6292a273cd0c91932b74548a.mockapi.io/items')
-      .then((response) => {
-        return response.json()
-      })
-      .then((items) => {
-        setItems(items)
-        setLoading(false)
-      })
+    dispatch(fetchItems())
+    // eslint-disable-next-line
   }, [])
 
   return (
