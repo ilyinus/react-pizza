@@ -9,12 +9,13 @@ import { fetchItems } from '../redux/slices/pizzasSlice'
 
 function Home() {
   const { items, isLoading } = useSelector((state) => state.pizzas)
+  const category = useSelector((state) => state.categories.active)
   const dispatch = useDispatch()
 
   React.useEffect(() => {
     dispatch(fetchItems())
     // eslint-disable-next-line
-  }, [])
+  }, [category])
 
   return (
     <div className="container">
