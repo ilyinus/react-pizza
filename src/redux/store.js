@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import categoriesSlice from './slices/categoriesSlice'
-import pizzasSlice from './slices/pizzasSlice'
+import categories from './slices/categoriesSlice'
+import pizzas from './slices/pizzasSlice'
+import sorting from './slices/sortingSlice'
 
 export const store = configureStore({
   reducer: {
-    categories: categoriesSlice,
-    pizzas: pizzasSlice,
+    categories,
+    pizzas,
+    sorting,
   },
 })

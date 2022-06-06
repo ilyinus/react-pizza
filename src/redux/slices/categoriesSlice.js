@@ -7,20 +7,20 @@ const initialState = {
     'Вегетарианская',
     'Гриль',
     'Острые',
-    'Закрытые',
+    'Закрытые'
   ],
-  active: 0,
+  activeCategory: 0
 }
 
 const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
-    setActive: (state, action) => {
-      state.active = action.payload
-    },
-  },
+    setActiveCategory(state, action) {
+      state.activeCategory = action.payload
+    }
+  }
 })
 
-export const { setActive } = categoriesSlice.actions
+export const { setActiveCategory } = categoriesSlice.actions
 export default categoriesSlice.reducer
