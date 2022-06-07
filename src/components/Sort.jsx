@@ -8,9 +8,23 @@ function Sort() {
   const dispatch = useDispatch()
 
   const [open, setOpen] = React.useState(false)
+  const popupRef = React.useRef()
+
+  React.useEffect(() => {
+    const handler = (event) => {
+      if (!event.path.includes(popupRef.current)) {
+        setOpen(false)
+      }
+    }
+    document.body.addEventListener('click', handler)
+
+    return () => {
+      document.body.removeEventListener('click', handler)
+    }
+  }, [])
 
   return (
-    <div className="sort">
+    <div ref={popupRef} className="sort">
       <div className="sort__label">
         <svg
           onClick={() =>
