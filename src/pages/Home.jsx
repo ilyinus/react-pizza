@@ -53,7 +53,7 @@ function Home() {
     const filters = qs.stringify({
       category: activeCategory === 0 ? '' : activeCategory,
       sortBy: sortingBy,
-      order: orderBy,
+      order: orderBy
     })
 
     navigate('?' + filters)
@@ -74,7 +74,7 @@ function Home() {
           ? Array(8)
               .fill()
               .map((_, index) => <Loader key={index} />)
-          : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
+          : items.map((item) => <PizzaBlock key={item.id} {...item} />)}
       </div>
     </div>
   )

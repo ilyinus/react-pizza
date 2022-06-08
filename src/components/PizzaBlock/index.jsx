@@ -1,11 +1,34 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-function PizzaBlock({ title, price, imageUrl, types, sizes }) {
+import { addToCart } from '../../redux/slices/cartSlice'
+
+function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
+  const item = useSelector((state) => state.cart.items['_' + id])
+  const dispatch = useDispatch()
+
   const allSizes = [26, 30, 40]
   const allTypes = ['тонкое', 'традиционное']
 
   const [size, setSize] = React.useState(sizes[0])
   const [type, setType] = React.useState(types[0])
+
+  const addItem = () => {
+    dispatch(
+      addToCart({
+        id,
+        title,
+        price,
+        imageUrl,
+        type: allTypes[type],
+        size: size,
+        typeIndex: type,
+        sizeIndex: allSizes.indexOf(size),
+        count: 1,
+        amount: price
+      })
+    )
+  }
 
   return (
     <div className="pizza-block">
@@ -16,7 +39,7 @@ function PizzaBlock({ title, price, imageUrl, types, sizes }) {
           <div
             className="active-type"
             style={{
-              transform: `translateX(${100 * type}%)`,
+              transform: `translateX(${100 * type}%)`
             }}
           ></div>
           {allTypes.map((value, index) => (
@@ -33,7 +56,7 @@ function PizzaBlock({ title, price, imageUrl, types, sizes }) {
           <div
             className="active-size"
             style={{
-              transform: `translateX(${100 * allSizes.indexOf(size)}%)`,
+              transform: `translateX(${100 * allSizes.indexOf(size)}%)`
             }}
           ></div>
           {allSizes.map((value, index) => (
@@ -49,7 +72,7 @@ function PizzaBlock({ title, price, imageUrl, types, sizes }) {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">{price} ₽</div>
-        <div className="button button--outline button--add">
+        <div onClick={addItem} className="button button--outline button--add">
           <svg
             width="12"
             height="12"
@@ -63,7 +86,7 @@ function PizzaBlock({ title, price, imageUrl, types, sizes }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
+          {!!item && <i>{item.count}</i>}
         </div>
       </div>
     </div>
