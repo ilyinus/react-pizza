@@ -38,8 +38,8 @@ function Home() {
       dispatch(setSortingOrder(params.order))
     }
 
-    navigate('?' + filters)
-    dispatch(setFilters(search))
+    if (filters.length !== 0) navigate('?' + filters)
+    if (search.length !== 0) dispatch(setFilters(search))
     dispatch(fetchItems())
     // eslint-disable-next-line
   }, [])
