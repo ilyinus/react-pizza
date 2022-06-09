@@ -1,28 +1,18 @@
-function CartItem({
-  title,
-  type,
-  size,
-  imageUrl,
-  count,
-  amount,
-  increaseCountHandler,
-  decreaseCountHandler,
-  removeFromCartHandler
-}) {
+function CartItem(props) {
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <img className="pizza-block__image" src={props.imageUrl} alt="Pizza" />
       </div>
       <div className="cart__item-info">
-        <h3>{title}</h3>
+        <h3>{props.title}</h3>
         <p>
-          {type}, {size} см.
+          {props.type}, {props.size} см.
         </p>
       </div>
       <div className="cart__item-count">
         <div
-          onClick={decreaseCountHandler}
+          onClick={props.decreaseCountHandler}
           className="button button--outline button--circle cart__item-count-minus"
         >
           <svg
@@ -42,9 +32,9 @@ function CartItem({
             />
           </svg>
         </div>
-        <b>{count}</b>
+        <b>{props.count}</b>
         <div
-          onClick={increaseCountHandler}
+          onClick={props.increaseCountHandler}
           className="button button--outline button--circle cart__item-count-plus"
         >
           <svg
@@ -66,11 +56,11 @@ function CartItem({
         </div>
       </div>
       <div className="cart__item-price">
-        <b>{amount} ₽</b>
+        <b>{props.amount} ₽</b>
       </div>
       <div className="cart__item-remove">
         <div
-          onClick={removeFromCartHandler}
+          onClick={props.removeFromCartHandler}
           className="button button--outline button--circle"
         >
           <svg

@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { addToCart } from '../../redux/slices/cartSlice'
+import { addToCart, selectItemById } from '../../redux/slices/cartSlice'
 
 function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
-  const item = useSelector((state) => state.cart.items['_' + id])
+  const item = useSelector(selectItemById(id))
   const dispatch = useDispatch()
 
   const allSizes = [26, 30, 40]
@@ -25,7 +25,7 @@ function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
         typeIndex: type,
         sizeIndex: allSizes.indexOf(size),
         count: 1,
-        amount: price,
+        amount: price
       })
     )
   }
@@ -39,7 +39,7 @@ function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
           <div
             className="active-type"
             style={{
-              transform: `translateX(${100 * type}%)`,
+              transform: `translateX(${100 * type}%)`
             }}
           ></div>
           {allTypes.map((value, index) => (
@@ -56,7 +56,7 @@ function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
           <div
             className="active-size"
             style={{
-              transform: `translateX(${100 * allSizes.indexOf(size)}%)`,
+              transform: `translateX(${100 * allSizes.indexOf(size)}%)`
             }}
           ></div>
           {allSizes.map((value, index) => (
