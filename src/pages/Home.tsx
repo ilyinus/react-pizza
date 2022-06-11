@@ -1,5 +1,4 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import qs from 'qs'
 
@@ -10,21 +9,22 @@ import Loader from '../components/PizzaBlock/Loader'
 import { fetchItems, setFilters } from '../redux/slices/pizzasSlice'
 import { setActiveCategory } from '../redux/slices/categoriesSlice'
 import { setSortingBy, setSortingOrder } from '../redux/slices/sortingSlice'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
-function Home() {
-  const { items, isLoading, filters } = useSelector((state) => state.pizzas)
-  const { categories, activeCategory } = useSelector(
+const Home: React.FC = () => {
+  const { items, isLoading, filters } = useAppSelector((state) => state.pizzas)
+  const { categories, activeCategory } = useAppSelector(
     (state) => state.categories
   )
-  const { sortingBy, orderBy } = useSelector((state) => state.sorting)
-  const dispatch = useDispatch()
+  const { sortingBy, orderBy } = useAppSelector((state) => state.sorting)
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const isRendered = React.useRef(false)
 
   React.useEffect(() => {
     const search = window.location.search.substring(1)
-    const params = qs.parse(search)
+    const params: any = qs.parse(search)
 
     if (Object.keys(params).includes('category') && params.category !== '') {
       dispatch(setActiveCategory(parseInt(params.category)))
@@ -72,7 +72,7 @@ function Home() {
       <div className="content__items">
         {isLoading
           ? Array(8)
-              .fill()
+              .fill(undefined)
               .map((_, index) => <Loader key={index} />)
           : items.map((item) => <PizzaBlock key={item.id} {...item} />)}
       </div>

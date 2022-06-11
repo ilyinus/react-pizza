@@ -1,12 +1,40 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../store'
 
-const initialState = {
+export interface Item {
+  id: number
+  title: string
+  price: number
+  imageUrl: string
+  type: string
+  size: number
+  typeIndex: number
+  sizeIndex: number
+  count: number
+  amount: number
+}
+
+interface CartState {
+  items: {
+    [key: string]: {
+      details: {
+        [key: string]: Item
+      }
+      count: number
+      amount: number
+    }
+  }
+  count: number
+  amount: number
+}
+
+const initialState: CartState = {
   items: {},
   count: 0,
   amount: 0
 }
 
-const getKey = (action) => {
+const getKey = (action: PayloadAction<Item>) => {
   return (
     action.payload.id +
     '_' +
@@ -20,7 +48,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart(state, action) {
+    addToCart(state, action: PayloadAction<Item>) {
       const id = '_' + action.payload.id
       const key = getKey(action)
 
@@ -45,7 +73,7 @@ const cartSlice = createSlice({
       state.count += action.payload.count
       state.amount += action.payload.count * action.payload.price
     },
-    removeFromCart(state, action) {
+    removeFromCart(state, action: PayloadAction<Item>) {
       const id = '_' + action.payload.id
       const key = getKey(action)
 
@@ -61,7 +89,7 @@ const cartSlice = createSlice({
         delete state.items[id]
       }
     },
-    increaseCount(state, action) {
+    increaseCount(state, action: PayloadAction<Item>) {
       const id = '_' + action.payload.id
       const key = getKey(action)
 
@@ -74,7 +102,7 @@ const cartSlice = createSlice({
       state.count++
       state.amount += action.payload.price
     },
-    decreaseCount(state, action) {
+    decreaseCount(state, action: PayloadAction<Item>) {
       const id = '_' + action.payload.id
       const key = getKey(action)
 
@@ -99,7 +127,8 @@ const cartSlice = createSlice({
   }
 })
 
-export const selectItemById = (id) => (state) => state.cart.items['_' + id]
+export const selectItemById = (id: number) => (state: RootState) =>
+  state.cart.items['_' + id]
 
 export const {
   addToCart,

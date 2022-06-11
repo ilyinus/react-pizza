@@ -1,13 +1,13 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
 import { setActiveCategory } from '../redux/slices/categoriesSlice'
 
-function Categories() {
-  const { categories, activeCategory } = useSelector(
+const Categories: React.FC = () => {
+  const { categories, activeCategory } = useAppSelector(
     (state) => state.categories
   )
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   return (
     <div className="categories">

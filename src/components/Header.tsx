@@ -1,9 +1,11 @@
-import { useSelector } from 'react-redux'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import logoSvg from '../assets/img/pizza-logo.svg'
 
-function Header() {
-  const { count, amount } = useSelector((state) => state.cart)
+import logoSvg from '../assets/img/pizza-logo.svg'
+import { useAppSelector } from '../redux/hooks'
+
+const Header: React.FC = () => {
+  const { count, amount } = useAppSelector((state) => state.cart)
 
   return (
     <div className="header">

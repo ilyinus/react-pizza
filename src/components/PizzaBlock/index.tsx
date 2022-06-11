@@ -1,11 +1,27 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 
 import { addToCart, selectItemById } from '../../redux/slices/cartSlice'
 
-function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
-  const item = useSelector(selectItemById(id))
-  const dispatch = useDispatch()
+type PizzaBlockProps = {
+  id: number
+  title: string
+  price: number
+  imageUrl: string
+  types: number[]
+  sizes: number[]
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  types,
+  sizes
+}) => {
+  const item = useAppSelector(selectItemById(id))
+  const dispatch = useAppDispatch()
 
   const allSizes = [26, 30, 40]
   const allTypes = ['тонкое', 'традиционное']

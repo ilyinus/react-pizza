@@ -1,8 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 import CartItem from '../components/CartItem'
 import EmptyCart from '../components/EmptyCart'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import {
   increaseCount,
   decreaseCount,
@@ -10,9 +11,9 @@ import {
   clearCart
 } from '../redux/slices/cartSlice'
 
-function Cart() {
-  const { items, count, amount } = useSelector((state) => state.cart)
-  const dispatch = useDispatch()
+const Cart: React.FC = () => {
+  const { items, count, amount } = useAppSelector((state) => state.cart)
+  const dispatch = useAppDispatch()
 
   if (count === 0) {
     return <EmptyCart />

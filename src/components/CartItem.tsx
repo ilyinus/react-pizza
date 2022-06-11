@@ -1,4 +1,13 @@
-function CartItem(props) {
+import React from 'react'
+import { Item } from '../redux/slices/cartSlice'
+
+interface CartItemProps extends Item {
+  decreaseCountHandler: () => void
+  increaseCountHandler: () => void
+  removeFromCartHandler: () => void
+}
+
+const CartItem: React.FC<CartItemProps> = (props) => {
   return (
     <div className="cart__item">
       <div className="cart__item-img">

@@ -1,17 +1,19 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import { setSortingBy, setSortingOrder } from '../redux/slices/sortingSlice'
 
-function Sort() {
-  const { options, sortingBy, orderBy } = useSelector((state) => state.sorting)
-  const dispatch = useDispatch()
+const Sort: React.FC = () => {
+  const { options, sortingBy, orderBy } = useAppSelector(
+    (state) => state.sorting
+  )
+  const dispatch = useAppDispatch()
 
   const [open, setOpen] = React.useState(false)
-  const popupRef = React.useRef()
+  const popupRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
-    const handler = (event) => {
+    const handler = (event: any) => {
       if (!event.path.includes(popupRef.current)) {
         setOpen(false)
       }

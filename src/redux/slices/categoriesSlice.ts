@@ -1,6 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = {
+interface CategoriesState {
+  categories: string[]
+  activeCategory: number
+}
+
+const initialState: CategoriesState = {
   categories: [
     'Все',
     'Мясные',
@@ -16,7 +21,7 @@ const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
-    setActiveCategory(state, action) {
+    setActiveCategory(state, action: PayloadAction<number>) {
       state.activeCategory = action.payload
     }
   }

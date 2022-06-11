@@ -1,6 +1,8 @@
+import React from 'react'
+
 import styles from './NotFound.module.scss'
 
-function NotFound() {
+const NotFound: React.FC = () => {
   return (
     <div className={styles.main}>
       <svg
