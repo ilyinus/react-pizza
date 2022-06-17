@@ -2,14 +2,18 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import qs from 'qs'
 
-import Categories from '../components/Categories'
-import PizzaBlock from '../components/PizzaBlock'
-import Sort from '../components/Sort'
+import { Categories, PizzaBlock, Sort } from '../components'
 import Loader from '../components/PizzaBlock/Loader'
-import { fetchItems, setFilters } from '../redux/slices/pizzasSlice'
-import { setActiveCategory } from '../redux/slices/categoriesSlice'
-import { setSortingBy, setSortingOrder } from '../redux/slices/sortingSlice'
+import { fetchItems, setFilters } from '../redux/pizzas/slice'
+import { setActiveCategory } from '../redux/categories/slice'
+import { setSortingBy, setSortingOrder } from '../redux/sorting/slice'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
+
+type ParamsType = {
+  category: string
+  sortBy: string
+  order: string
+}
 
 const Home: React.FC = () => {
   const { items, isLoading, filters } = useAppSelector((state) => state.pizzas)
@@ -24,7 +28,7 @@ const Home: React.FC = () => {
 
   React.useEffect(() => {
     const search = window.location.search.substring(1)
-    const params: any = qs.parse(search)
+    const params = qs.parse(search) as qs.ParsedQs as ParamsType
 
     if (Object.keys(params).includes('category') && params.category !== '') {
       dispatch(setActiveCategory(parseInt(params.category)))

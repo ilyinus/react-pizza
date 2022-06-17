@@ -1,0 +1,35 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .alert {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    margin: 2rem;
+    width: 60%;
+    border-radius: 10px;
+    border: 1px solid #f5c2c7;
+    color: #842029;
+    background: #f8d7da;
+
+    & svg {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      opacity: 0.5;
+      cursor: pointer;
+    }
+  }
+}

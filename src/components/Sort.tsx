@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { setSortingBy, setSortingOrder } from '../redux/slices/sortingSlice'
+import { setSortingBy, setSortingOrder } from '../redux/sorting/slice'
 
-const Sort: React.FC = () => {
+export const Sort: React.FC = () => {
   const { options, sortingBy, orderBy } = useAppSelector(
     (state) => state.sorting
   )
@@ -13,8 +13,9 @@ const Sort: React.FC = () => {
   const popupRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
-    const handler = (event: any) => {
-      if (!event.path.includes(popupRef.current)) {
+    const handler = (event: MouseEvent) => {
+      const _event = event as MouseEvent & { path: HTMLDivElement[] }
+      if (popupRef.current && !_event.path.includes(popupRef.current)) {
         setOpen(false)
       }
     }
@@ -68,5 +69,3 @@ const Sort: React.FC = () => {
     </div>
   )
 }
-
-export default Sort

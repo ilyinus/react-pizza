@@ -1,15 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import CartItem from '../components/CartItem'
-import EmptyCart from '../components/EmptyCart'
+import { CartItem, EmptyCart } from '../components'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import {
   increaseCount,
   decreaseCount,
   removeFromCart,
   clearCart
-} from '../redux/slices/cartSlice'
+} from '../redux/cart/slice'
 
 const Cart: React.FC = () => {
   const { items, count, amount } = useAppSelector((state) => state.cart)

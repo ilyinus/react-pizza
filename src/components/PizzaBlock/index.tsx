@@ -1,7 +1,8 @@
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 
-import { addToCart, selectItemById } from '../../redux/slices/cartSlice'
+import { addToCart } from '../../redux/cart/slice'
+import { selectItemById } from '../../redux/cart/selectrors'
 
 type PizzaBlockProps = {
   id: number
@@ -12,7 +13,7 @@ type PizzaBlockProps = {
   sizes: number[]
 }
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({
   id,
   title,
   price,
@@ -108,5 +109,3 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
     </div>
   )
 }
-
-export default PizzaBlock

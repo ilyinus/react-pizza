@@ -1,9 +1,9 @@
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
-import { setActiveCategory } from '../redux/slices/categoriesSlice'
+import { setActiveCategory } from '../redux/categories/slice'
 
-const Categories: React.FC = () => {
+export const Categories: React.FC = () => {
   const { categories, activeCategory } = useAppSelector(
     (state) => state.categories
   )
@@ -25,5 +25,3 @@ const Categories: React.FC = () => {
     </div>
   )
 }
-
-export default Categories

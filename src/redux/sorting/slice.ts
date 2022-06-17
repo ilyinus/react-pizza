@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface SortingState {
-  options: {
-    [key: string]: { name: string }
-  }
-  sortingBy: string
-  orderBy: string
-}
+import { SortingState } from './types'
 
 const initialState: SortingState = {
   options: {

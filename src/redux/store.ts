@@ -1,15 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
-import categories from './slices/categoriesSlice'
-import pizzas from './slices/pizzasSlice'
-import sorting from './slices/sortingSlice'
-import cart from './slices/cartSlice'
+import categories from './categories/slice'
+import pizzas from './pizzas/slice'
+import sorting from './sorting/slice'
+import cart from './cart/slice'
+import notifications from './notifications/slice'
 
 export const store = configureStore({
   reducer: {
     categories,
     pizzas,
     sorting,
-    cart
+    cart,
+    notifications
   }
 })
 

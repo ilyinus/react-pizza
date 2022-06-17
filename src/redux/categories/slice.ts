@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface CategoriesState {
-  categories: string[]
-  activeCategory: number
-}
+import { CategoriesState } from './types'
 
 const initialState: CategoriesState = {
   categories: [

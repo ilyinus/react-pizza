@@ -1,5 +1,5 @@
 import React from 'react'
-import { Item } from '../redux/slices/cartSlice'
+import { Item } from '../redux/cart/types'
 
 interface CartItemProps extends Item {
   decreaseCountHandler: () => void
@@ -7,7 +7,7 @@ interface CartItemProps extends Item {
   removeFromCartHandler: () => void
 }
 
-const CartItem: React.FC<CartItemProps> = (props) => {
+export const CartItem: React.FC<CartItemProps> = (props) => {
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -93,5 +93,3 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     </div>
   )
 }
-
-export default CartItem

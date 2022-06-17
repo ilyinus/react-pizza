@@ -1,32 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../store'
-
-export interface Item {
-  id: number
-  title: string
-  price: number
-  imageUrl: string
-  type: string
-  size: number
-  typeIndex: number
-  sizeIndex: number
-  count: number
-  amount: number
-}
-
-interface CartState {
-  items: {
-    [key: string]: {
-      details: {
-        [key: string]: Item
-      }
-      count: number
-      amount: number
-    }
-  }
-  count: number
-  amount: number
-}
+import { Item, CartState } from './types'
 
 const initialState: CartState = {
   items: {},
@@ -126,9 +99,6 @@ const cartSlice = createSlice({
     }
   }
 })
-
-export const selectItemById = (id: number) => (state: RootState) =>
-  state.cart.items['_' + id]
 
 export const {
   addToCart,
