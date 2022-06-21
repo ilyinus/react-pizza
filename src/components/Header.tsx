@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import logoSvg from '../assets/img/pizza-logo.svg'
 import { useAppSelector } from '../redux/hooks'
+import { setItem } from '../utils/localStorage'
 
 export const Header: React.FC = () => {
-  const { count, amount } = useAppSelector((state) => state.cart)
+  const cart = useAppSelector((state) => state.cart)
+  const count = cart.count
+  const amount = cart.amount
+
+  const isRendered = useRef(false)
+
+  useEffect(() => {
+    if (!isRendered.current) {
+      setItem('cart', cart)
+    } else {
+      isRendered.current = true
+    }
+  }, [cart])
 
   return (
     <div className="header">
