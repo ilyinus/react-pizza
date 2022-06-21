@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './Notifications.module.scss'
+import styles from './Notification.module.scss'
 import { useAppDispatch } from '../../redux/hooks'
 import { hideNotification } from '../../redux/notifications/slice'
 import { NotificationItem } from '../../redux/notifications/types'
