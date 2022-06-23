@@ -1,22 +1,37 @@
 import React from 'react'
 
-export const Pagination: React.FC = ({ pag, handler }: any) => {
-  if (pag.totalPages === 1 || pag.numberOfElements === 0) return null
+import styles from './Pagination.module.scss'
 
-  const block = Math.min(pag.totalPages, 5)
-  const rest = pag.curPage % block
-  const start = pag.curPage - (rest === 0 ? block - 1 : rest - 1)
+type PaginationProps = {
+  totalPages: number
+  curPage: number
+  handler: (page: number) => void
+}
+
+export const Pagination: React.FC<PaginationProps> = ({
+  totalPages,
+  curPage,
+  handler
+}) => {
+  if (totalPages === 1) return null
+
+  const block = Math.min(totalPages, 3)
+  const rest = curPage % block
+  const start = curPage - (rest === 0 ? block - 1 : rest - 1)
   const end = start + block - 1
-  const shift = start - Math.max(end - pag.totalPages, 0)
+  const shift = start - Math.max(end - totalPages, 0)
 
   return (
-    <div className="pagination">
+    <div className={styles.pagination}>
       <ul>
-        <li className="arrow" onClick={() => handler('<')}>
+        <li
+          className={styles.arrow}
+          onClick={() => handler(Math.max(1, curPage - 1))}
+        >
           &lt;
         </li>
         {start > 1 && <li onClick={() => handler(1)}>1</li>}
-        {start - 1 > 1 && <li className="gap">...</li>}
+        {start - 1 > 1 && <li className={styles.gap}>...</li>}
         {Array(block)
           .fill(0)
           .map((_, index) => {
@@ -24,17 +39,20 @@ export const Pagination: React.FC = ({ pag, handler }: any) => {
               <li
                 key={index}
                 onClick={() => handler(shift + index)}
-                className={shift + index === pag.curPage ? 'active' : ''}
+                className={shift + index === curPage ? styles.active : ''}
               >
                 {shift + index}
               </li>
             )
           })}
-        {pag.totalPages - end > 1 && <li className="gap">...</li>}
-        {pag.totalPages > end && (
-          <li onClick={() => handler(pag.totalPages)}>{pag.totalPages}</li>
+        {totalPages - end > 1 && <li className={styles.gap}>...</li>}
+        {totalPages > end && (
+          <li onClick={() => handler(totalPages)}>{totalPages}</li>
         )}
-        <li className="arrow" onClick={() => handler('>')}>
+        <li
+          className={styles.arrow}
+          onClick={() => handler(Math.min(curPage + 1, totalPages))}
+        >
           &gt;
         </li>
       </ul>

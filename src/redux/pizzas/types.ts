@@ -12,5 +12,10 @@ export interface Item {
 export interface PizzasState {
   items: Item[]
   isLoading: boolean
-  filters: string
+  pagination: {
+    curPage: number
+    totalPages: number
+    limit: number
+  }
+  refetch: boolean
 }

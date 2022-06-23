@@ -4,11 +4,11 @@ import { SortingState } from './types'
 
 const initialState: SortingState = {
   options: {
-    raitng: { name: 'популярности' },
+    raiting: { name: 'популярности' },
     price: { name: 'цене' },
     title: { name: 'алфавиту' }
   },
-  sortingBy: 'raitng',
+  sortingBy: 'raiting',
   orderBy: 'asc'
 }
 

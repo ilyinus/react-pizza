@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import logoSvg from '../assets/img/pizza-logo.svg'
 
@@ -9,18 +9,26 @@ type HeaderProps = {
 }
 
 export const Header: React.FC<HeaderProps> = ({ count, amount }) => {
+  const location = useLocation()
+
+  const getBanner = () => (
+    <div className="header__logo">
+      <img width="38" src={logoSvg} alt="Pizza logo" />
+      <div>
+        <h1>React Pizza</h1>
+        <p>самая вкусная пицца во вселенной</p>
+      </div>
+    </div>
+  )
+
   return (
     <div className="header">
       <div className="container">
-        <Link to={'/'}>
-          <div className="header__logo">
-            <img width="38" src={logoSvg} alt="Pizza logo" />
-            <div>
-              <h1>React Pizza</h1>
-              <p>самая вкусная пицца во вселенной</p>
-            </div>
-          </div>
-        </Link>
+        {location.pathname === '/' ? (
+          getBanner()
+        ) : (
+          <Link to={'/'}>{getBanner()}</Link>
+        )}
         <div className="header__cart">
           <Link to={'cart'} className="button button--cart">
             <span>{amount} ₽</span>

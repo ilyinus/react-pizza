@@ -6,25 +6,31 @@ import { showNotification } from '../notifications/slice'
 import { NotificationType } from '../notifications/types'
 import { PizzasState, Item } from './types'
 
+const SRV = process.env.REACT_APP_SRV
+
 const initialState: PizzasState = {
   items: [],
   isLoading: true,
-  filters: ''
+  pagination: {
+    curPage: 1,
+    totalPages: 1,
+    limit: 8
+  },
+  refetch: false
 }
 
 export const fetchItems = createAsyncThunk<
   Item[],
-  void,
+  string,
   {
     dispatch: AppDispatch
     state: RootState
   }
->('pizzas/fetchItems', async (_, thunkApi) => {
-  const filters = thunkApi.getState().pizzas.filters
+>('pizzas/fetchItems', async (filters, thunkApi) => {
   try {
-    const response = await axios.get<Item[]>(
-      'https://6292a273cd0c91932b74548a.mockapi.io/items?' + filters
-    )
+    const response = await axios.get<Item[]>(SRV + 'items?' + filters, {
+      timeout: 3000
+    })
     return response.data
   } catch (e) {
     const message = axios.isAxiosError(e)
@@ -44,8 +50,14 @@ const pizzasSlice = createSlice({
   name: 'pizzas',
   initialState,
   reducers: {
-    setFilters(state, action) {
-      state.filters = action.payload
+    setCurPage(state, action: PayloadAction<number>) {
+      state.pagination.curPage = action.payload
+    },
+    setLimit(state, action: PayloadAction<number>) {
+      state.pagination.limit = action.payload
+    },
+    setRefetch(state) {
+      state.refetch = !state.refetch
     }
   },
   extraReducers(builder) {
@@ -58,6 +70,8 @@ const pizzasSlice = createSlice({
       (state, action: PayloadAction<Item[]>) => {
         state.items = action.payload
         state.isLoading = false
+        // TODO: Костыль, так-как mockapi не возвращает количество страниц
+        state.pagination.totalPages = Math.ceil(10 / state.pagination.limit)
       }
     )
     builder.addCase(fetchItems.rejected, (state) => {
@@ -67,5 +81,5 @@ const pizzasSlice = createSlice({
   }
 })
 
-export const { setFilters } = pizzasSlice.actions
+export const { setCurPage, setLimit, setRefetch } = pizzasSlice.actions
 export default pizzasSlice.reducer

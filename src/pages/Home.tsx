@@ -2,21 +2,30 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import qs from 'qs'
 
-import { Categories, PizzaBlock, Sort } from '../components'
+import { Categories, PizzaBlock, Sort, Pagination } from '../components'
 import Loader from '../components/PizzaBlock/Loader'
-import { fetchItems, setFilters } from '../redux/pizzas/slice'
+import {
+  fetchItems,
+  setCurPage,
+  setLimit,
+  setRefetch
+} from '../redux/pizzas/slice'
 import { setActiveCategory } from '../redux/categories/slice'
 import { setSortingBy, setSortingOrder } from '../redux/sorting/slice'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
+import { selectItems } from '../redux/pizzas/selectors'
 
 type ParamsType = {
   category: string
   sortBy: string
   order: string
+  page: string
+  limit: string
 }
 
 const Home: React.FC = () => {
-  const { items, isLoading, filters } = useAppSelector((state) => state.pizzas)
+  const { items, isLoading, curPage, totalPages, limit, refetch } =
+    useAppSelector(selectItems())
   const { categories, activeCategory } = useAppSelector(
     (state) => state.categories
   )
@@ -42,9 +51,15 @@ const Home: React.FC = () => {
       dispatch(setSortingOrder(params.order))
     }
 
-    if (filters.length !== 0) navigate('?' + filters)
-    if (search.length !== 0) dispatch(setFilters(search))
-    dispatch(fetchItems())
+    if (Object.keys(params).includes('page') && params.page !== '') {
+      dispatch(setCurPage(parseInt(params.page)))
+    }
+
+    if (Object.keys(params).includes('limit') && params.limit !== '') {
+      dispatch(setLimit(parseInt(params.limit)))
+    }
+
+    dispatch(setRefetch())
     // eslint-disable-next-line
   }, [])
 
@@ -53,18 +68,17 @@ const Home: React.FC = () => {
       isRendered.current = true
       return
     }
-
     const filters = qs.stringify({
       category: activeCategory === 0 ? '' : activeCategory,
       sortBy: sortingBy,
-      order: orderBy
+      order: orderBy,
+      page: curPage,
+      limit: limit
     })
-
     navigate('?' + filters)
-    dispatch(setFilters(filters))
-    dispatch(fetchItems())
+    dispatch(fetchItems(filters))
     // eslint-disable-next-line
-  }, [activeCategory, sortingBy, orderBy])
+  }, [activeCategory, sortingBy, orderBy, curPage, limit, refetch])
 
   return (
     <div className="container">
@@ -80,6 +94,11 @@ const Home: React.FC = () => {
               .map((_, index) => <Loader key={index} />)
           : items.map((item) => <PizzaBlock key={item.id} {...item} />)}
       </div>
+      <Pagination
+        totalPages={totalPages}
+        curPage={curPage}
+        handler={(page) => dispatch(setCurPage(page))}
+      />
     </div>
   )
 }
